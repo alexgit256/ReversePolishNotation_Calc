@@ -110,7 +110,7 @@ namespace RPNCalc
 					startPositionPointer+=len;
 				}
 				
-				if (char.IsLetter(input[startPositionPointer]) && !isOK_Flag)
+				if (char.IsLetter(input[startPositionPointer]) && !isOK_Flag)	//FNC and VAR starts with letter
 				{
 					int len=1;
 					

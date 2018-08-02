@@ -15,7 +15,7 @@ namespace RPNCalc
 	/// </summary>
 	public static partial class TermLib
 	{
-		public enum TermTypes {ERR,MRK,OPR,INT,FLT,VAR,FNC,NUL}; //error,markup, operator, integer, float, variable, function, null 
+		public enum TermTypes {ERR,MRK,OPR,INT,FLT,VAR,FNC,NUL,EXP}; //error,markup, operator, integer, float, variable, function, null 
 		public enum MRKType {POINT,COMMA,OP_PARENTHESIS,CLS_PARENTHESIS,OP_BRACKET,CLS_BRACKET}; //Types of MRK terms
 		public enum OPRType
 		{

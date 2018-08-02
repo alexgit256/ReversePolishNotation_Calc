@@ -29,7 +29,12 @@ namespace RPNCalc
 			public TermAbsClass()	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)ERRType.ERR_NOT_DEFINED; }
 			public TermAbsClass(ERRType err)	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)err; }
 		}
-	
+		
+		/*public class EXPTerm: TermAbsClass
+		{
+			
+		}*/
+		
 		public class ERRTerm: TermAbsClass
 		{
 			/*public TermAbsClass GetResult(TermAbsClass TermA, TermAbsClass TermB)
@@ -48,6 +53,8 @@ namespace RPNCalc
 				Console.WriteLine("Markup doesn't perform any operations!");
 				return new ERRTerm(ERRType.ERR_GET_RESULT);	//ERR_15 No operations for markup
 			}*/
+			
+			public MRKType MarkupType {get { return (MRKType)val[0];} }
 			
 			public override bool checkMatch(string input)
 			{

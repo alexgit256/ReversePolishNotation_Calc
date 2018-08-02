@@ -48,6 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Runtime\FunctionManagement.cs" />
+    <Compile Include="Runtime\VariableManagement.cs" />
     <Compile Include="TermLib\Constants.cs" />
     <Compile Include="TermLib\ErrorTypes.cs" />
     <Compile Include="TermLib\FunctionLibraryReader.cs" />
@@ -61,6 +63,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Runtime" />
     <Folder Include="TermLib" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

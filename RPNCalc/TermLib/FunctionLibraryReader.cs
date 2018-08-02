@@ -17,7 +17,12 @@ namespace RPNCalc
 	{
 		public static TermTypes TellFunctionFromVariable(string input)
 		{
-			return TermTypes.ERR;
+			throw new NotImplementedException();
+		}
+		
+		public static VARTerm PerformFNC(FNCTerm func, TermStack Parameters)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
