@@ -21,14 +21,14 @@ namespace RPNCalc
 			public abstract Boolean checkMatch(string input);	//check if input is given term
 			public abstract string debug_GetValueAsString();	//
 			protected TermTypes TermType;
-			protected int[] val;
+			protected uint[] val;
 			public TermTypes GetTermType { get {return TermType; } }
-			public int[] GetBitValue { get { return val; } }
+			public uint[] GetBitValue { get { return val; } }
 			//public static abstract TermAbsClass getFromString(string input);
 			//public abstract TermAbsClass GetResult(TermAbsClass TermA, TermAbsClass TermB);
 			
-			public TermAbsClass()	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)ERRType.ERR_NOT_DEFINED; }
-			public TermAbsClass(ERRType err)	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)err; }
+			public TermAbsClass()	{ TermType = TermTypes.ERR; val=new uint[1]; val[0]=(int)ERRType.ERR_NOT_DEFINED; }
+			public TermAbsClass(ERRType err)	{ TermType = TermTypes.ERR; val=new uint[1]; val[0]=(uint)err; }
 			//public TermAbsClass()
 		}
 		
@@ -46,7 +46,7 @@ namespace RPNCalc
 			public override string debug_GetValueAsString() { return "Error"; }
 			public override bool checkMatch(string input) {return true;}
 			
-			public ERRTerm(ERRType err)	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)err; }
+			public ERRTerm(ERRType err)	{ TermType = TermTypes.ERR; val=new uint[1]; val[0]=(uint)err; }
 		}
 	
 		public class MRKTerm : TermAbsClass
@@ -76,7 +76,7 @@ namespace RPNCalc
 			
 			public MRKTerm(string text)
 			{
-				base.val = new int[1];
+				base.val = new uint[1];
 				base.TermType=TermTypes.MRK;
 				switch (text) 
 				{
@@ -213,7 +213,7 @@ namespace RPNCalc
 				return new OPRTerm(tmp);
 			}
 			
-			public OPRTerm(OPRType oprT) {base.TermType=TermTypes.OPR; val = new int[1]; val[0]=(int)oprT; opType=oprT; }
+			public OPRTerm(OPRType oprT) {base.TermType=TermTypes.OPR; val = new uint[1]; val[0]=(uint)oprT; opType=oprT; }
 			
 		}
 		
@@ -241,16 +241,19 @@ namespace RPNCalc
 			public long Value
 			{
 				get { long outt=(long)val[1]; outt=outt<<32; outt+=val[0]; return outt; }
-				set { val[0]=(int)value; var tmp=value>>32; val[1]=(int)tmp; }
+				set { val[0]=(uint)value; var tmp=value>>32; val[1]=(uint)tmp; }
 			}
 			
 			public INTTerm(Int64 num)
 			{
 				TermType=TermTypes.INT;
-				val=new int[2];
-				val[0]=(int)num;
-				num=num>>32;
-				val[1]=(int)num;
+				val=new uint[2];
+				unchecked
+				{
+					val[0]=(uint)num;
+					num=num>>32;
+					val[1]=(uint)num;
+				}
 			}
 		}
 		
@@ -273,16 +276,19 @@ namespace RPNCalc
 			public double Value
 			{
 				get { long tmp=val[0]+(val[1]>>32); return BitConverter.Int64BitsToDouble(tmp); }
-				set { long tmp = BitConverter.DoubleToInt64Bits(value); val[0] = (int)tmp; val[1]=(int)(tmp>>32); }
+				set { long tmp = BitConverter.DoubleToInt64Bits(value); val[0] = (uint)tmp; val[1]=(uint)(tmp>>32); }
 			}
 			
 			public FLTTerm(double input)
 			{
 				base.TermType=TermTypes.FLT;
 				long tmp = BitConverter.DoubleToInt64Bits(input);
-				val = new int[2];
-				val[0] = (int)input;
-				val[1]=(int)(tmp>>32);
+				unchecked
+				{
+					val = new uint[2];
+					val[0] = (uint)input;
+					val[1]=(uint)(tmp>>32);	
+				}
 			}
 		}
 		
@@ -321,13 +327,13 @@ namespace RPNCalc
 				return String.Format("Variable: {0}",variableType);
 			}
 			
-			public VARTerm(VARType var_type, int[] intVal)
+			public VARTerm(VARType var_type, uint[] intVal)
 			{
 				variableType=var_type;
 				base.TermType=TermTypes.VAR;
 				base.val=null;
-				base.val=new int[intVal.Length+1];
-				base.val[0]=(int)var_type;
+				base.val=new uint[intVal.Length+1];
+				base.val[0]=(uint)var_type;
 				Array.ConstrainedCopy(intVal,0,base.val,1,intVal.Length);
 			}
 		}
@@ -359,8 +365,8 @@ namespace RPNCalc
 			public FNCTerm(FNCType func_type)
 			{
 				base.TermType=TermTypes.FNC;
-				base.val = new int[2];
-				base.val[0] = (int)func_type;
+				base.val = new uint[2];
+				base.val[0] = (uint)func_type;
 			}
 		}
 		
@@ -371,7 +377,7 @@ namespace RPNCalc
 			{
 				return "Null Term";
 			}
-			public NULLTerm(int[] code)
+			public NULLTerm(uint[] code)
 			{
 				base.val=code;
 			}

@@ -32,6 +32,7 @@ namespace RPNCalc
 				} 
 				catch (IndexOutOfRangeException e) 
 				{
+					Console.WriteLine(e.ToString());
 					break;
 				}
 			}

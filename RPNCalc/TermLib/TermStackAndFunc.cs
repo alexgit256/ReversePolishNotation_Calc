@@ -145,13 +145,21 @@ namespace RPNCalc
 					}					
 					else
 					{
-						int[] debugPush = new int[1];
+						uint[] debugPush = new uint[1];
 						//string txt=TakePieceFromText(input,startPosition,input.Length-startPosition-1);
 						term=new VARTerm(VARType.ERR,debugPush);	//todo catch variable
 					}
 					startPositionPointer+=len;
 					isOK_Flag=true;
 				}
+				
+				if (startPositionPointer<input.Length && Markup.Contains(input[startPositionPointer]) && !isOK_Flag)
+				{
+					Console.WriteLine("Markup!!");
+					term=new MRKTerm(Convert.ToString(input[startPositionPointer++]));
+					isOK_Flag=true;
+				}
+				
 				if (!isOK_Flag)
 					throw new ParsingException(input[startPositionPointer]);
 				TStack.Push(term);
@@ -160,9 +168,10 @@ namespace RPNCalc
 		
 		public static void ScanExpression(string input,ref TermStack TStack)
 		{
+			int iterationCounter=0;
 			int startPositionPointer=0;
 			StringSplitter sSplitter=new StringSplitter();
-			while (startPositionPointer<input.Length)
+			while (startPositionPointer<input.Length && iterationCounter++<max_Term_Count)
 				try { sSplitter.getTermFromString(input,ref TStack,ref startPositionPointer); }
 			catch (ParsingException ex) { Console.Write("{0}, ", ex.ToString()); }
 		}

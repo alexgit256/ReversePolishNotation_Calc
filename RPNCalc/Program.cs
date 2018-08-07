@@ -18,8 +18,10 @@ namespace RPNCalc
 			//Console.WriteLine("Hello World!");
 			
 			// TODO: Implement Functionality Here
-			
-			DebugTools.debug_ListAllTermsFromString("5+6*8+variable^2-6",true);
+			Console.WriteLine("Write here your expression");
+			string x = Console.ReadLine();
+			DebugTools.debug_ListAllTermsFromString(x,true);
+			Console.WriteLine("Press any key to leave");
 			Console.ReadKey(true);
 		}
 	}
