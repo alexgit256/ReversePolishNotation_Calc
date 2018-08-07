@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugTools.cs" />
     <Compile Include="ReversePolishNotationTransformer\ReversePolishNotationTransformer.cs" />
     <Compile Include="Runtime\FunctionManagement.cs" />
     <Compile Include="Runtime\VariableManagement.cs" />

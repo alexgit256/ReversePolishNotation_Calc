@@ -19,6 +19,7 @@ namespace RPNCalc
 		public abstract class TermAbsClass
 		{
 			public abstract Boolean checkMatch(string input);	//check if input is given term
+			public abstract string debug_GetValueAsString();	//
 			protected TermTypes TermType;
 			protected int[] val;
 			public TermTypes GetTermType { get {return TermType; } }
@@ -42,6 +43,7 @@ namespace RPNCalc
 			{
 				return new ERRTerm(ERRType.ERR_INVALID_ARGUMENTS);	//problems with arguments
 			}*/
+			public override string debug_GetValueAsString() { return "Error"; }
 			public override bool checkMatch(string input) {return true;}
 			
 			public ERRTerm(ERRType err)	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)err; }
@@ -65,6 +67,11 @@ namespace RPNCalc
 				if (Array.BinarySearch(Markup,input[0])>=0)	//if symbol is markup
 					return true;
 				return false;
+			}
+			
+			public override string debug_GetValueAsString()
+			{
+				return String.Format("Markup: {0}", this.MarkupType);
 			}
 			
 			public MRKTerm(string text)
@@ -111,6 +118,11 @@ namespace RPNCalc
 						if (Array.BinarySearch(OperatorSymbols,input[1])>=0)
 							return true;
 				return false;
+			}
+			
+			public override string debug_GetValueAsString()
+			{
+				return String.Format("Operator: {0}", this.opType);
 			}
 			
 			public TermAbsClass GetResult(params TermAbsClass[] TermA)
@@ -221,6 +233,11 @@ namespace RPNCalc
 				return false;
 			}
 			
+			public override string debug_GetValueAsString()
+			{
+				return string.Format("Integer: {0}", this.Value);
+			}
+			
 			public long Value
 			{
 				get { long outt=(long)val[1]; outt=outt<<32; outt+=val[0]; return outt; }
@@ -248,6 +265,11 @@ namespace RPNCalc
 				return false;
 			}
 			
+			public override string debug_GetValueAsString()
+			{
+				return String.Format("Float: {0}",this.Value);
+			}
+			
 			public double Value
 			{
 				get { long tmp=val[0]+(val[1]>>32); return BitConverter.Int64BitsToDouble(tmp); }
@@ -266,6 +288,19 @@ namespace RPNCalc
 		
 		public class VARTerm: TermAbsClass
 		{
+			protected VARType variableType;
+			public VARType VariableType	//NORMALY NOT TO BE USED!
+			{
+				get 
+				{
+					return variableType;
+				}
+				set 
+				{
+					variableType=value;
+				}
+			}
+			
 			public override bool checkMatch(string input)
 			{
 				if (!Char.IsLetter(input[0]))
@@ -281,8 +316,14 @@ namespace RPNCalc
 				return true;
 			}
 			
+			public override string debug_GetValueAsString()
+			{
+				return String.Format("Variable: {0}",variableType);
+			}
+			
 			public VARTerm(VARType var_type, int[] intVal)
 			{
+				variableType=var_type;
 				base.TermType=TermTypes.VAR;
 				base.val=null;
 				base.val=new int[intVal.Length+1];
@@ -310,6 +351,11 @@ namespace RPNCalc
 				return true;
 			}
 			
+			public override string debug_GetValueAsString()
+			{
+				return "Function";
+			}
+			
 			public FNCTerm(FNCType func_type)
 			{
 				base.TermType=TermTypes.FNC;
@@ -321,6 +367,10 @@ namespace RPNCalc
 		public class NULLTerm : TermAbsClass	//e.g. for comments
 		{
 			public override bool checkMatch(string input) {return true;}
+			public override string debug_GetValueAsString()
+			{
+				return "Null Term";
+			}
 			public NULLTerm(int[] code)
 			{
 				base.val=code;

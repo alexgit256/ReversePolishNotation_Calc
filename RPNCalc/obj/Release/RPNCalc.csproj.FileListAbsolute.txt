@@ -1,0 +1,4 @@
+C:\Users\Alex\Documents\SharpDevelop Projects\RPNCalc\RPNCalc\bin\Release\RPNCalc.exe.config
+C:\Users\Alex\Documents\SharpDevelop Projects\RPNCalc\RPNCalc\bin\Release\RPNCalc.exe
+C:\Users\Alex\Documents\SharpDevelop Projects\RPNCalc\RPNCalc\obj\Release\RPNCalc.csprojResolveAssemblyReference.cache
+C:\Users\Alex\Documents\SharpDevelop Projects\RPNCalc\RPNCalc\obj\Release\RPNCalc.exe
