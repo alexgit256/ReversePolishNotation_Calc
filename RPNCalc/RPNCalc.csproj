@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReversePolishNotationTransformer\ReversePolishNotationTransformer.cs" />
     <Compile Include="Runtime\FunctionManagement.cs" />
     <Compile Include="Runtime\VariableManagement.cs" />
     <Compile Include="TermLib\Constants.cs" />
@@ -63,6 +64,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ReversePolishNotationTransformer" />
     <Folder Include="Runtime" />
     <Folder Include="TermLib" />
   </ItemGroup>

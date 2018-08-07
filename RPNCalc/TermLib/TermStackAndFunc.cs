@@ -90,10 +90,13 @@ namespace RPNCalc
 					
 					tt=TermTypes.OPR;
 					startPositionPointer++;
-					if (Array.BinarySearch(OperatorSymbols,input[startPositionPointer])>=0)
+					if (startPositionPointer<input.Length && OperatorSymbols.Contains(input[startPositionPointer]))
 						startPositionPointer++;
 					string txt=TakePieceFromText(input,tmp,startPositionPointer-tmp);
 					term = OPRTerm.GetOperatorTerm(txt);
+					
+					//Console.Write("{0} is done from string ({1}),",OPRTerm.GetOperatorTerm(txt).GetOperatorType, txt);
+					
 					isOK_Flag=true;
 				}
 				

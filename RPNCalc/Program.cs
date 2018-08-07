@@ -18,7 +18,8 @@ namespace RPNCalc
 			//Console.WriteLine("Hello World!");
 			
 			// TODO: Implement Functionality Here
-			string x = "2*Variable+1";
+			string x = "2*Variable^2+1";
+			Console.WriteLine(x);
 
 			TermLib.TermStack TStack = new TermLib.TermStack();
 			

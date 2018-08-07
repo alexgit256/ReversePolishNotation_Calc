@@ -97,6 +97,9 @@ namespace RPNCalc
 	
 		public class OPRTerm : TermAbsClass
 		{
+			protected OPRType opType;
+			public OPRType GetOperatorType { get { return opType; } }
+			
 			public override bool checkMatch(string input)
 			{
 				if (input.Length>2)
@@ -117,7 +120,7 @@ namespace RPNCalc
 			
 			public static OPRTerm GetOperatorTerm(string inpt)
 			{
-				OPRType tmp=new OPRType();
+				OPRType tmp;
 			
 				switch(inpt)
 				{
@@ -190,11 +193,15 @@ namespace RPNCalc
 					case "--":
 						tmp=OPRType.DECREMENT;
 						break;
+					default:
+						tmp=OPRType.ERROPR;
+						//Console.Write("<{0}>",inpt);
+						break;
 				}
 				return new OPRTerm(tmp);
 			}
 			
-			public OPRTerm(OPRType oprT) {base.TermType=TermTypes.OPR; val = new int[1]; val[0]=(int)oprT; }
+			public OPRTerm(OPRType oprT) {base.TermType=TermTypes.OPR; val = new int[1]; val[0]=(int)oprT; opType=oprT; }
 			
 		}
 		
