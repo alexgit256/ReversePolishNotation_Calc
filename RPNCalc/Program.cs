@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using System.Globalization;
 
 namespace RPNCalc
 {
@@ -14,15 +15,31 @@ namespace RPNCalc
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			//Console.WriteLine("Hello World!");
 			
 			// TODO: Implement Functionality Here
-			TermLib.TermTypes t0 = TermLib.TermTypes.MRK;
-			TermLib.TermTypes t1 = TermLib.TermTypes.OPR;
-			TermLib.TermTypes t2 = TermLib.TermTypes.INT;
-			TermLib.TermTypes t3 = TermLib.TermTypes.FLT;
-			TermLib.TermTypes t4 = TermLib.TermTypes.VAR;
-			Console.Write("My debug {0}, {1}, {2}, {3}, {4}",t0,t1,t2,t3,t4);
+			string x = "2*Variable+1";
+
+			TermLib.TermStack TStack = new TermLib.TermStack();
+			
+			/*NumberFormatInfo provider = new NumberFormatInfo();
+			provider.CurrencyDecimalSeparator=".";
+			double l = Convert.ToDouble("69.55",provider);
+			Console.WriteLine(l);*/
+			
+			TermLib.ScanExpression(x,ref TStack);
+			while (!TStack.isEmpty) 
+			{
+				try 
+				{
+					Console.Write("{0}, ", TStack.Pop().GetTermType);
+				} 
+				catch (IndexOutOfRangeException e) 
+				{
+					break;
+				}
+			}
+			//Console.Write("My debug {0}, {1}, {2}, {3}, {4}",t0,t1,t2,t3,t4);
 			Console.ReadKey(true);
 		}
 	}

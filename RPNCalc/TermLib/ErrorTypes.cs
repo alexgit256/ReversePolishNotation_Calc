@@ -19,5 +19,22 @@ namespace RPNCalc
 		{
 			ERR_NOT_DEFINED, ERR_INVALID_VALUE, ERR_GET_RESULT, ERR_INVALID_ARGUMENTS
 		}
+		
+		public class ParsingException: Exception
+		{
+			private char problematicChar=(char)0;
+			public char ProblematicChar { get { return problematicChar; } }
+			
+			public override string ToString()
+			{
+				return String.Format("Problem with symbol ({0})",problematicChar);
+			}
+			
+			public ParsingException() : base() {}
+			public ParsingException(char err)
+			{
+				this.problematicChar=err;
+			}
+		}
 	}
 }

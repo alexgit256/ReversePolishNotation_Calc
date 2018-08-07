@@ -8,6 +8,8 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Globalization;
 
 
 namespace RPNCalc
@@ -41,12 +43,21 @@ namespace RPNCalc
 				if (pointer<0)
 				{
 					Terms.Add(x);
-					pointer++;
+					pointer=0;
 				}
 				else
 				{
-					if (pointer++<=Terms.Count)
-						Terms[pointer]=x;
+					if (++pointer<Terms.Count)
+						try 
+						{
+							//Console.Write("pointer is {0} {1}", pointer,Terms.Count);
+							Terms[pointer]=x;	
+						} 
+						catch (IndexOutOfRangeException ex) 
+						{						
+							Console.Write("{0}, pointer is {1}",ex, pointer);
+							throw ex;
+						}
 					else
 						Terms.Add(x);
 				}
@@ -66,14 +77,17 @@ namespace RPNCalc
 			
 			public void getTermFromString(string input, ref TermStack TStack, ref int startPositionPointer)
 			{
+				//Console.Write("start term {0}, ", input[startPositionPointer]);
 				TermTypes tt;
 				TermAbsClass term=null;
 				bool isOK_Flag=false;
 				int tmp=startPositionPointer;
 				//string txt=TakePieceFromText(input,startPosition,input.Length-startPosition-1);
 				
-				if (Array.BinarySearch(OperatorSymbols,input[startPositionPointer])>=0 && !isOK_Flag)	//if is operator
+				if (startPositionPointer<input.Length && OperatorSymbols.Contains(input[startPositionPointer]) && !isOK_Flag)	//if is operator
 				{
+					//Console.WriteLine("operator {0}", input[startPositionPointer]);
+					
 					tt=TermTypes.OPR;
 					startPositionPointer++;
 					if (Array.BinarySearch(OperatorSymbols,input[startPositionPointer])>=0)
@@ -83,41 +97,71 @@ namespace RPNCalc
 					isOK_Flag=true;
 				}
 				
-				if (char.IsDigit(input[startPositionPointer]) && !isOK_Flag)	//if a number
+				if (startPositionPointer<input.Length && char.IsDigit(input[startPositionPointer]) && !isOK_Flag)	//if a number
 				{
 					int len=0;
 					bool isFloat=false;
-					while (char.IsDigit(input[startPositionPointer+len]))
+					while (startPositionPointer+len<input.Length && char.IsDigit(input[startPositionPointer+len]))
 						len++;
-					if (len>0 && input[startPositionPointer+len]=='.')
+					if (startPositionPointer+len<input.Length && len>0 && input[startPositionPointer+len]=='.')
 					{
 						isFloat=true; len++;
-					}
-					while (char.IsDigit(input[startPositionPointer+len]))
+						while (startPositionPointer+len<input.Length && char.IsDigit(input[startPositionPointer+len]))
 						len++;
+					}
+					
 					
 					if (isFloat)
 					{
-						double x = Convert.ToDouble(TakePieceFromText(input,startPositionPointer,len));
+						NumberFormatInfo provider = new NumberFormatInfo();
+						provider.CurrencyDecimalSeparator=".";
+						double x = Convert.ToDouble(TakePieceFromText(input,startPositionPointer,len),provider);
 						term = new FLTTerm(x);
+						
+						//Console.Write("FLOAT {0}, ", x);
 					}
 					else
 					{
 						long x=Convert.ToInt64(TakePieceFromText(input,startPositionPointer,len));
 						term = new INTTerm(x);
+						
+						//Console.Write("INTEGER {0}, ", x);
 					}
 					isOK_Flag=true;
 					startPositionPointer+=len;
 				}
 				
-				if (char.IsLetter(input[startPositionPointer]) && !isOK_Flag)	//FNC and VAR starts with letter
+				if (startPositionPointer<input.Length && char.IsLetter(input[startPositionPointer]) && !isOK_Flag)	//FNC and VAR starts with letter
 				{
 					int len=1;
-					
+					while (startPositionPointer+len<input.Length && char.IsLetter(input[startPositionPointer+len]))
+						len++;
+					if (startPositionPointer+len<input.Length && input[startPositionPointer+len]=='(')	//if name is interupted with bracket - it's func
+					{
+						term=new FNCTerm(FNCType.ERROR);	//todo catch function
+					}					
+					else
+					{
+						int[] debugPush = new int[1];
+						//string txt=TakePieceFromText(input,startPosition,input.Length-startPosition-1);
+						term=new VARTerm(VARType.ERR,debugPush);	//todo catch variable
+					}
+					startPositionPointer+=len;
+					isOK_Flag=true;
 				}
-				
+				if (!isOK_Flag)
+					throw new ParsingException(input[startPositionPointer]);
 				TStack.Push(term);
 			}
+		}
+		
+		public static void ScanExpression(string input,ref TermStack TStack)
+		{
+			int startPositionPointer=0;
+			StringSplitter sSplitter=new StringSplitter();
+			while (startPositionPointer<input.Length)
+				try { sSplitter.getTermFromString(input,ref TStack,ref startPositionPointer); }
+			catch (ParsingException ex) { Console.Write("{0}, ", ex.ToString()); }
 		}
 		
 		private static string TakePieceFromText(string text, int startIndex, int length)

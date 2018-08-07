@@ -24,7 +24,7 @@ namespace RPNCalc
 			LEFT_SHIFT,INCREMENT,DECREMENT	//two symbol operators
 		};
 		// PNTR - pointer, BIN - returns binary code
-		public enum VARType {DSP,UDF,INT,INT32,PTR,PTR48,FLT,CHR,CHR8};
+		public enum VARType {ERR,DSP,UDF,INT,INT32,PTR,PTR48,FLT,CHR,CHR8};
 		public enum FNCType {VOID,PNTR,BIN,INT,FLOAT,ERROR};
 	}
 }

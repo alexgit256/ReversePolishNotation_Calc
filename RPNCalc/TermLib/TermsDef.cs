@@ -28,6 +28,7 @@ namespace RPNCalc
 			
 			public TermAbsClass()	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)ERRType.ERR_NOT_DEFINED; }
 			public TermAbsClass(ERRType err)	{ TermType = TermTypes.ERR; val=new int[1]; val[0]=(int)err; }
+			//public TermAbsClass()
 		}
 		
 		/*public class EXPTerm: TermAbsClass
@@ -69,6 +70,7 @@ namespace RPNCalc
 			public MRKTerm(string text)
 			{
 				base.val = new int[1];
+				base.TermType=TermTypes.MRK;
 				switch (text) 
 				{
 					case ".":
@@ -192,7 +194,7 @@ namespace RPNCalc
 				return new OPRTerm(tmp);
 			}
 			
-			public OPRTerm(OPRType oprT) {val = new int[1]; val[0]=(int)oprT; }
+			public OPRTerm(OPRType oprT) {base.TermType=TermTypes.OPR; val = new int[1]; val[0]=(int)oprT; }
 			
 		}
 		
@@ -247,6 +249,7 @@ namespace RPNCalc
 			
 			public FLTTerm(double input)
 			{
+				base.TermType=TermTypes.FLT;
 				long tmp = BitConverter.DoubleToInt64Bits(input);
 				val = new int[2];
 				val[0] = (int)input;
@@ -254,7 +257,7 @@ namespace RPNCalc
 			}
 		}
 		
-		public abstract class VARTerm: TermAbsClass
+		public class VARTerm: TermAbsClass
 		{
 			public override bool checkMatch(string input)
 			{
@@ -273,13 +276,15 @@ namespace RPNCalc
 			
 			public VARTerm(VARType var_type, int[] intVal)
 			{
+				base.TermType=TermTypes.VAR;
+				base.val=null;
 				base.val=new int[intVal.Length+1];
 				base.val[0]=(int)var_type;
 				Array.ConstrainedCopy(intVal,0,base.val,1,intVal.Length);
 			}
 		}
 		
-		public abstract class FNCTerm: TermAbsClass
+		public class FNCTerm: TermAbsClass
 		{
 			//private byte[] functionTransform() {};
 			
@@ -300,6 +305,7 @@ namespace RPNCalc
 			
 			public FNCTerm(FNCType func_type)
 			{
+				base.TermType=TermTypes.FNC;
 				base.val = new int[2];
 				base.val[0] = (int)func_type;
 			}
