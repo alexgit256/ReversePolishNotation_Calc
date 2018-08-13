@@ -18,8 +18,8 @@ namespace RPNCalc
 	{
 		public const int max_Term_Length = 64;
 		public const int max_Term_Count = 128;
+		public const double flt_round_tolerancy = 2*(1/double.MaxValue);
 		public static readonly char[] Markup = {'.',',','(',')','[',']'};
 		public static readonly char[] OperatorSymbols = {'=','+','-','*','/','>','<','!','&','|','^','%'};
-		
 	}
 }

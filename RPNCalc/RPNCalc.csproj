@@ -52,7 +52,7 @@
     <Compile Include="ReversePolishNotationTransformer\ReversePolishNotationTransformer.cs" />
     <Compile Include="Runtime\FunctionManagement.cs" />
     <Compile Include="Runtime\VariableManagement.cs" />
-    <Compile Include="TermLib\BytesConvertation.cs" />
+    <Compile Include="TermLib\DataConvertation.cs" />
     <Compile Include="TermLib\Constants.cs" />
     <Compile Include="TermLib\ErrorTypes.cs" />
     <Compile Include="TermLib\FunctionLibraryReader.cs" />

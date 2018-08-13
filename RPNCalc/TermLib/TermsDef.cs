@@ -256,6 +256,12 @@ namespace RPNCalc
 					val[1]=(uint)num;
 				}
 			}
+			
+			public INTTerm(uint[] inp)
+			{
+				TermType=TermTypes.INT;
+				val=inp;
+			}
 		}
 		
 		public class FLTTerm : TermAbsClass
@@ -292,6 +298,12 @@ namespace RPNCalc
 					val[1]=(uint)(tmp>>32);	
 					var tmp1=val[1];
 				}
+			}
+			
+			public FLTTerm(uint[] inp)
+			{
+				base.TermType=TermTypes.FLT;
+				val=inp;
 			}
 		}
 		

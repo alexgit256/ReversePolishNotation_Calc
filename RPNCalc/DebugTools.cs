@@ -46,6 +46,27 @@ namespace RPNCalc
 			Console.WriteLine(testt.debug_GetValueAsString());
 		}
 		
+		public static void debug_GivenOperatorTest(int iterations)
+		{
+			for(int i=0;i<iterations;i++)
+			{
+				Console.WriteLine("Write which operator would you like to test:");
+				string opr=Console.ReadLine();
+				TermLib.TermStack inpOpr=new TermLib.TermStack();
+				TermLib.ScanExpression(opr,ref inpOpr);
+				var term=inpOpr.Pop();
+				
+				Console.WriteLine("Write here your first number for {0} check",(TermLib.OPRType)term.GetBitValue[0]);
+				string x = Console.ReadLine();
+				TermLib.TermStack testing=new TermLib.TermStack();
+				TermLib.ScanExpression(x,ref testing);
+				Console.WriteLine("And second one");
+				x = Console.ReadLine();
+				TermLib.ScanExpression(x,ref testing);
+				DebugTools.debug_TestOperator((TermLib.OPRType)term.GetBitValue[0],testing);
+			}
+		}
+		
 		public static void debug_ComplexOperatorTest()
 		{
 			
@@ -75,6 +96,42 @@ namespace RPNCalc
 			x = Console.ReadLine();
 			TermLib.ScanExpression(x,ref testing);
 			DebugTools.debug_TestOperator(TermLib.OPRType.MULT,testing);
+			
+			Console.WriteLine("Write here your first number for division check");
+			x = Console.ReadLine();
+			testing=new TermLib.TermStack();
+			TermLib.ScanExpression(x,ref testing);
+			Console.WriteLine("and second one");
+			x = Console.ReadLine();
+			TermLib.ScanExpression(x,ref testing);
+			DebugTools.debug_TestOperator(TermLib.OPRType.DIV,testing);
+			
+			Console.WriteLine("Write here your first number for modular check");
+			x = Console.ReadLine();
+			testing=new TermLib.TermStack();
+			TermLib.ScanExpression(x,ref testing);
+			Console.WriteLine("and second one");
+			x = Console.ReadLine();
+			TermLib.ScanExpression(x,ref testing);
+			DebugTools.debug_TestOperator(TermLib.OPRType.PERCENT,testing);
+			
+			Console.WriteLine("Write here your first number for more-then-operator check");
+			x = Console.ReadLine();
+			testing=new TermLib.TermStack();
+			TermLib.ScanExpression(x,ref testing);
+			Console.WriteLine("and second one");
+			x = Console.ReadLine();
+			TermLib.ScanExpression(x,ref testing);
+			DebugTools.debug_TestOperator(TermLib.OPRType.MORE,testing);
+			
+			Console.WriteLine("Write here your first number for less-then-operator check");
+			x = Console.ReadLine();
+			testing=new TermLib.TermStack();
+			TermLib.ScanExpression(x,ref testing);
+			Console.WriteLine("and second one");
+			x = Console.ReadLine();
+			TermLib.ScanExpression(x,ref testing);
+			DebugTools.debug_TestOperator(TermLib.OPRType.LESS,testing);
 		}
 	}
 }

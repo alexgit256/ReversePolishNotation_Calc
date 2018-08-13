@@ -20,7 +20,12 @@ namespace RPNCalc
 			// TODO: Implement Functionality Here
 			
 			
-			DebugTools.debug_ComplexOperatorTest();
+			//DebugTools.debug_ComplexOperatorTest();
+			
+			DebugTools.debug_GivenOperatorTest(16);
+			Console.WriteLine("Enter string for parsing");
+			string x = Console.ReadLine();
+			DebugTools.debug_ListAllTermsFromString(x,true);
 			
 			Console.WriteLine("Press any key to leave");
 			Console.ReadKey(true);
