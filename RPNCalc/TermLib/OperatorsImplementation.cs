@@ -33,7 +33,15 @@ namespace RPNCalc
 						}
 						if(A.GetTermType==TermTypes.VAR)	//A is now variable with B value (can be variable, that contains variable)
 						{
-							VARTerm tmp=new VARTerm((VARType)B.GetBitValue[0],B.GetBitValue);	//(VARType)B.GetBitValue[0] gets variable type
+							VARTerm tmp;	//(VARType)B.GetBitValue[0] gets variable type
+							if(B.GetTermType==TermTypes.INT)
+								tmp=new VARTerm(VARType.INT,B.GetBitValue);
+							else
+								if(B.GetTermType==TermTypes.FLT)
+									tmp=new VARTerm(VARType.FLT,B.GetBitValue);
+							else
+									throw new NotImplementedException();
+							TStack.Push(tmp);
 						}
 						break;
 				case OPRType.PLUS:

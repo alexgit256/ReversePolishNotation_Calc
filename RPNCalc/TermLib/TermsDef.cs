@@ -345,17 +345,26 @@ namespace RPNCalc
 			
 			public override string debug_GetValueAsString()
 			{
-				return String.Format("Variable: {0}",variableType);
+				string x=string.Empty;
+				if (this.variableType==VARType.INT)
+					x=string.Format("{0}", BytesToINT(GetObjectFromVAR(this).GetBitValue));
+				if (this.variableType==VARType.FLT)
+					x=string.Format("{0}", BytesToDBL(GetObjectFromVAR(this).GetBitValue));
+				
+				return String.Format("Variable: {0} = {1}",variableType, x);
 			}
 			
 			public VARTerm(VARType var_type, uint[] intVal)
 			{
-				variableType=var_type;
-				base.TermType=TermTypes.VAR;
-				base.val=null;
-				base.val=new uint[intVal.Length+1];
-				base.val[0]=(uint)var_type;
-				Array.ConstrainedCopy(intVal,0,base.val,1,intVal.Length);
+				unchecked
+				{
+					variableType=var_type;
+					base.TermType=TermTypes.VAR;
+					base.val=null;
+					base.val=new uint[intVal.Length+1];
+					base.val[0]=(uint)var_type;
+					Array.ConstrainedCopy(intVal,0,base.val,1,intVal.Length);
+				}
 			}
 		}
 		
