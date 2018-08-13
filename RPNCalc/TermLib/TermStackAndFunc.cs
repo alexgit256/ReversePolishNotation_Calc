@@ -42,8 +42,11 @@ namespace RPNCalc
 			{
 				if (pointer<0)
 				{
-					Terms.Add(x);
 					pointer=0;
+					if(Terms.Count==0)
+						Terms.Add(x);
+					else
+						Terms[0]=x;
 				}
 				else
 				{
@@ -155,7 +158,7 @@ namespace RPNCalc
 				
 				if (startPositionPointer<input.Length && Markup.Contains(input[startPositionPointer]) && !isOK_Flag)
 				{
-					Console.WriteLine("Markup!!");
+					//Console.WriteLine("Markup!!");
 					term=new MRKTerm(Convert.ToString(input[startPositionPointer++]));
 					isOK_Flag=true;
 				}

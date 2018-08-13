@@ -24,6 +24,7 @@ namespace RPNCalc
 			protected uint[] val;
 			public TermTypes GetTermType { get {return TermType; } }
 			public uint[] GetBitValue { get { return val; } }
+			public uint[] SetBitValue { set { val=value; } }
 			//public static abstract TermAbsClass getFromString(string input);
 			//public abstract TermAbsClass GetResult(TermAbsClass TermA, TermAbsClass TermB);
 			
@@ -275,7 +276,7 @@ namespace RPNCalc
 			
 			public double Value
 			{
-				get { long tmp=val[0]+(val[1]>>32); return BitConverter.Int64BitsToDouble(tmp); }
+				get { long tmp0=val[0]; long tmp1=val[1]; tmp1=tmp1<<32; return BitConverter.Int64BitsToDouble(tmp0+tmp1); }
 				set { long tmp = BitConverter.DoubleToInt64Bits(value); val[0] = (uint)tmp; val[1]=(uint)(tmp>>32); }
 			}
 			
@@ -287,7 +288,9 @@ namespace RPNCalc
 				{
 					val = new uint[2];
 					val[0] = (uint)input;
+					var tmp0=val[0];
 					val[1]=(uint)(tmp>>32);	
+					var tmp1=val[1];
 				}
 			}
 		}
@@ -320,6 +323,12 @@ namespace RPNCalc
 							return false;
 				}
 				return true;
+			}
+			
+			public uint[] Value	//variable management
+			{
+				get { return val; }
+				set { this.val = value; }
 			}
 			
 			public override string debug_GetValueAsString()

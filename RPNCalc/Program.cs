@@ -18,9 +18,10 @@ namespace RPNCalc
 			//Console.WriteLine("Hello World!");
 			
 			// TODO: Implement Functionality Here
-			Console.WriteLine("Write here your expression");
-			string x = Console.ReadLine();
-			DebugTools.debug_ListAllTermsFromString(x,true);
+			
+			
+			DebugTools.debug_ComplexOperatorTest();
+			
 			Console.WriteLine("Press any key to leave");
 			Console.ReadKey(true);
 		}

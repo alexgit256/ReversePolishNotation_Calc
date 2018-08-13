@@ -52,9 +52,11 @@
     <Compile Include="ReversePolishNotationTransformer\ReversePolishNotationTransformer.cs" />
     <Compile Include="Runtime\FunctionManagement.cs" />
     <Compile Include="Runtime\VariableManagement.cs" />
+    <Compile Include="TermLib\BytesConvertation.cs" />
     <Compile Include="TermLib\Constants.cs" />
     <Compile Include="TermLib\ErrorTypes.cs" />
     <Compile Include="TermLib\FunctionLibraryReader.cs" />
+    <Compile Include="TermLib\OperatorsImplementation.cs" />
     <Compile Include="TermLib\TermsDef.cs" />
     <Compile Include="TermLib\TermStackAndFunc.cs" />
     <Compile Include="TermLib\TermsTypes.cs" />
